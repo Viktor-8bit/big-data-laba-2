@@ -185,54 +185,6 @@ for p in purchases:
     productpurchase.append(ProductPurchase(id, random.choice(products), p))
     id += 1
 
-# print("")
-# print("=== Manufacturers ===")
-# [print(m) for m in manufacturers]
-
-# print("")
-# print("=== Addreses ===")
-# [print(a) for a in addresses]
-
-# print("")
-# print("=== Colors ===")
-# [print(c) for c in colors]
-
-# print("")
-# print("=== Categories ===")
-# [print(c) for c in categories]
-
-# print("")
-# print("=== Customers ===")
-# [print(c) for c in customers]
-
-# print("")
-# print("=== Stores ===")
-# [print(s) for s in stores]
-
-# print("")
-# print("=== Products ===")
-# [print(p) for p in products]
-
-# print("")
-# print("=== NewPrices ===")
-# [print(np) for np in newprices]
-
-# print("=== StoreProduct ===")
-# [print(sp) for sp in productstories]
-
-# print("")
-# print("=== Purchases ===")
-# [print(p) for p in purchases]
-
-# print("")
-# print("=== PurchaseDelivery ===")
-# [print(pd) for pd in purchasedelivery]
-
-# print("")
-# print("=== ProductPurchase ===")
-# [print(pp) for pp in productpurchase]
-
-
 # Connect to an existing database
 conn = psycopg2.connect("dbname=postgres user=postgres password=rDx-Ckr-PjM-373 host=localhost port=5432")
 
@@ -298,3 +250,51 @@ for pp in productpurchase:
 conn.commit()
 cur.close()
 conn.close()
+
+
+# print("")
+# print("=== Manufacturers ===")
+# [print(m) for m in manufacturers]
+
+# print("")
+# print("=== Addreses ===")
+# [print(a) for a in addresses]
+
+# print("")
+# print("=== Colors ===")
+# [print(c) for c in colors]
+
+# print("")
+# print("=== Categories ===")
+# [print(c) for c in categories]
+
+# print("")
+# print("=== Customers ===")
+# [print(c) for c in customers]
+
+# print("")
+# print("=== Stores ===")
+# [print(s) for s in stores]
+
+# print("")
+# print("=== Products ===")
+# [print(p) for p in products]
+
+# print("")
+# print("=== NewPrices ===")
+# [print(np) for np in newprices]
+
+# print("=== StoreProduct ===")
+# [print(sp) for sp in productstories]
+
+# print("")
+# print("=== Purchases ===")
+# [print(p) for p in purchases]
+
+# print("")
+# print("=== PurchaseDelivery ===")
+# [print(pd) for pd in purchasedelivery]
+
+# print("")
+# print("=== ProductPurchase ===")
+# [print(pp) for pp in productpurchase]

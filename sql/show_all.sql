@@ -6,7 +6,6 @@
 
 
 
-
 select * from   PurchaseDelivery;
 select * from   ProductPurchase;
 select * from   Purchase;

@@ -1,0 +1,1330 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.1
+-- Dumped by pg_dump version 16.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: adminpack; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: addreses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.addreses (
+    adress_id integer NOT NULL,
+    city character varying(100),
+    street character varying(100),
+    building_number character varying(10),
+    apartment_number character varying(10),
+    entrance_number character varying(10),
+    additional_info character varying(200)
+);
+
+
+ALTER TABLE public.addreses OWNER TO postgres;
+
+--
+-- Name: addreses_adress_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.addreses_adress_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.addreses_adress_id_seq OWNER TO postgres;
+
+--
+-- Name: addreses_adress_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.addreses_adress_id_seq OWNED BY public.addreses.adress_id;
+
+
+--
+-- Name: category; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.category (
+    category_id integer NOT NULL,
+    category_name character varying(255)
+);
+
+
+ALTER TABLE public.category OWNER TO postgres;
+
+--
+-- Name: category_category_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.category_category_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.category_category_id_seq OWNER TO postgres;
+
+--
+-- Name: category_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.category_category_id_seq OWNED BY public.category.category_id;
+
+
+--
+-- Name: colors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.colors (
+    color_id integer NOT NULL,
+    color_name character varying(255)
+);
+
+
+ALTER TABLE public.colors OWNER TO postgres;
+
+--
+-- Name: colors_color_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.colors_color_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.colors_color_id_seq OWNER TO postgres;
+
+--
+-- Name: colors_color_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.colors_color_id_seq OWNED BY public.colors.color_id;
+
+
+--
+-- Name: customers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.customers (
+    customer_id integer NOT NULL,
+    last_name character varying(255),
+    first_name character varying(255),
+    middle_name character varying(255),
+    customer_addr_id integer
+);
+
+
+ALTER TABLE public.customers OWNER TO postgres;
+
+--
+-- Name: customers_customer_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.customers_customer_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.customers_customer_id_seq OWNER TO postgres;
+
+--
+-- Name: customers_customer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.customers_customer_id_seq OWNED BY public.customers.customer_id;
+
+
+--
+-- Name: manufacturers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.manufacturers (
+    manufacturer_id integer NOT NULL,
+    manufacturer_name character varying(255)
+);
+
+
+ALTER TABLE public.manufacturers OWNER TO postgres;
+
+--
+-- Name: manufacturers_manufacturer_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.manufacturers_manufacturer_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.manufacturers_manufacturer_id_seq OWNER TO postgres;
+
+--
+-- Name: manufacturers_manufacturer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.manufacturers_manufacturer_id_seq OWNED BY public.manufacturers.manufacturer_id;
+
+
+--
+-- Name: newprices; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.newprices (
+    new_prices_id integer NOT NULL,
+    date_price_change date,
+    new_price numeric(15,2),
+    product_id integer
+);
+
+
+ALTER TABLE public.newprices OWNER TO postgres;
+
+--
+-- Name: newprices_new_prices_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.newprices_new_prices_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.newprices_new_prices_id_seq OWNER TO postgres;
+
+--
+-- Name: newprices_new_prices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.newprices_new_prices_id_seq OWNED BY public.newprices.new_prices_id;
+
+
+--
+-- Name: product; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.product (
+    product_id integer NOT NULL,
+    product_size integer,
+    product_price numeric(15,2),
+    product_name character varying(255),
+    product_color_id integer,
+    category_id integer,
+    manufacturer_id integer
+);
+
+
+ALTER TABLE public.product OWNER TO postgres;
+
+--
+-- Name: product_product_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.product_product_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.product_product_id_seq OWNER TO postgres;
+
+--
+-- Name: product_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.product_product_id_seq OWNED BY public.product.product_id;
+
+
+--
+-- Name: productpurchase; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.productpurchase (
+    product_purchase_id integer NOT NULL,
+    product_id integer,
+    purchase_id integer
+);
+
+
+ALTER TABLE public.productpurchase OWNER TO postgres;
+
+--
+-- Name: productpurchase_product_purchase_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.productpurchase_product_purchase_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.productpurchase_product_purchase_id_seq OWNER TO postgres;
+
+--
+-- Name: productpurchase_product_purchase_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.productpurchase_product_purchase_id_seq OWNED BY public.productpurchase.product_purchase_id;
+
+
+--
+-- Name: purchase; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.purchase (
+    purchase_id integer NOT NULL,
+    discount numeric(5,2),
+    purchase_date date,
+    store_id integer,
+    customer_id integer
+);
+
+
+ALTER TABLE public.purchase OWNER TO postgres;
+
+--
+-- Name: purchase_purchase_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.purchase_purchase_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.purchase_purchase_id_seq OWNER TO postgres;
+
+--
+-- Name: purchase_purchase_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.purchase_purchase_id_seq OWNED BY public.purchase.purchase_id;
+
+
+--
+-- Name: purchasedelivery; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.purchasedelivery (
+    purchase_delivery_id integer NOT NULL,
+    delivery_date date,
+    purchase_id integer
+);
+
+
+ALTER TABLE public.purchasedelivery OWNER TO postgres;
+
+--
+-- Name: purchasedelivery_purchase_delivery_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.purchasedelivery_purchase_delivery_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.purchasedelivery_purchase_delivery_id_seq OWNER TO postgres;
+
+--
+-- Name: purchasedelivery_purchase_delivery_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.purchasedelivery_purchase_delivery_id_seq OWNED BY public.purchasedelivery.purchase_delivery_id;
+
+
+--
+-- Name: store; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.store (
+    store_id integer NOT NULL,
+    store_name character varying(255),
+    store_addr_id integer
+);
+
+
+ALTER TABLE public.store OWNER TO postgres;
+
+--
+-- Name: store_store_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.store_store_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.store_store_id_seq OWNER TO postgres;
+
+--
+-- Name: store_store_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.store_store_id_seq OWNED BY public.store.store_id;
+
+
+--
+-- Name: storeproduct; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.storeproduct (
+    store_product_id integer NOT NULL,
+    product_id integer,
+    store_id integer,
+    product_count integer
+);
+
+
+ALTER TABLE public.storeproduct OWNER TO postgres;
+
+--
+-- Name: storeproduct_store_product_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.storeproduct_store_product_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.storeproduct_store_product_id_seq OWNER TO postgres;
+
+--
+-- Name: storeproduct_store_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.storeproduct_store_product_id_seq OWNED BY public.storeproduct.store_product_id;
+
+
+--
+-- Name: addreses adress_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addreses ALTER COLUMN adress_id SET DEFAULT nextval('public.addreses_adress_id_seq'::regclass);
+
+
+--
+-- Name: category category_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.category ALTER COLUMN category_id SET DEFAULT nextval('public.category_category_id_seq'::regclass);
+
+
+--
+-- Name: colors color_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.colors ALTER COLUMN color_id SET DEFAULT nextval('public.colors_color_id_seq'::regclass);
+
+
+--
+-- Name: customers customer_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.customers ALTER COLUMN customer_id SET DEFAULT nextval('public.customers_customer_id_seq'::regclass);
+
+
+--
+-- Name: manufacturers manufacturer_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.manufacturers ALTER COLUMN manufacturer_id SET DEFAULT nextval('public.manufacturers_manufacturer_id_seq'::regclass);
+
+
+--
+-- Name: newprices new_prices_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.newprices ALTER COLUMN new_prices_id SET DEFAULT nextval('public.newprices_new_prices_id_seq'::regclass);
+
+
+--
+-- Name: product product_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product ALTER COLUMN product_id SET DEFAULT nextval('public.product_product_id_seq'::regclass);
+
+
+--
+-- Name: productpurchase product_purchase_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.productpurchase ALTER COLUMN product_purchase_id SET DEFAULT nextval('public.productpurchase_product_purchase_id_seq'::regclass);
+
+
+--
+-- Name: purchase purchase_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.purchase ALTER COLUMN purchase_id SET DEFAULT nextval('public.purchase_purchase_id_seq'::regclass);
+
+
+--
+-- Name: purchasedelivery purchase_delivery_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.purchasedelivery ALTER COLUMN purchase_delivery_id SET DEFAULT nextval('public.purchasedelivery_purchase_delivery_id_seq'::regclass);
+
+
+--
+-- Name: store store_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.store ALTER COLUMN store_id SET DEFAULT nextval('public.store_store_id_seq'::regclass);
+
+
+--
+-- Name: storeproduct store_product_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.storeproduct ALTER COLUMN store_product_id SET DEFAULT nextval('public.storeproduct_store_product_id_seq'::regclass);
+
+
+--
+-- Data for Name: addreses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.addreses (adress_id, city, street, building_number, apartment_number, entrance_number, additional_info) FROM stdin;
+1	Saint Petersburg	Nevsky	25	3	10	Entrance on the right
+2	Moscow	Kirova	12	1	2	Entrance on the left
+3	New York	Broadway	45	5	A	Main entrance
+4	Tokyo	Shibuya	8	B	1	Side entrance
+5	Paris	Champs-Elysees	30	2	C	Back entrance
+6	London	Baker Street	221B	Ground	1	Front entrance
+7	Berlin	Alexanderplatz	1	-	3	Service entrance
+8	Sydney	George Street	100	Level 1	Suite 5	Employee entrance
+9	Rome	Via Condotti	10	A	6	Delivery entrance
+10	Dubai	Sheikh Zayed Road	123	Tower A	Floor 15	Guest entrance
+11	Los Angeles	Hollywood Boulevard	555	Penthouse	Top Floor	VIP entrance
+12	Singapore	Orchard Road	40	Lobby	Level 3	Exclusive entrance
+13	Toronto	Yonge Street	80	Unit 200	Suite 2	Private entrance
+14	Berlin	Potsdamer Platz	1	-	15	Restricted entrance
+15	Barcelona	Paseo de Gracia	75	Floor 2	Door 7	Secret entrance
+\.
+
+
+--
+-- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.category (category_id, category_name) FROM stdin;
+1	Smartphone
+2	Tablet
+3	Headphones
+4	Smartwatch
+5	Camera
+6	TV
+7	Gaming Console
+8	Printer
+9	Monitor
+10	Router
+11	Keyboard
+12	Mouse
+13	Smart Home Device
+14	Fitness Tracker
+15	External Hard Drive
+16	Software
+\.
+
+
+--
+-- Data for Name: colors; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.colors (color_id, color_name) FROM stdin;
+1	red
+2	blue
+3	green
+4	yellow
+5	purple
+6	orange
+7	pink
+8	brown
+9	gray
+10	white
+11	cyan
+12	magenta
+13	teal
+14	lime
+15	indigo
+\.
+
+
+--
+-- Data for Name: customers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.customers (customer_id, last_name, first_name, middle_name, customer_addr_id) FROM stdin;
+0	Генадий	Ганадиев	Генадиевич	1
+1	Иван	Иванов	Иванович	1
+2	Петр	Петров	Петрович	2
+3	Мария	Сидорова	Ивановна	3
+4	Алексей	Смирнов	Петрович	4
+5	Елена	Козлова	Алексеевна	5
+6	Андрей	Николаев	Сергеевич	6
+7	Юлия	Павлова	Дмитриевна	7
+8	Дмитрий	Васильев	Андреевич	8
+9	Ольга	Александрова	Петровна	9
+10	Сергей	Михайлов	Александрович	10
+11	Наталья	Егорова	Владимировна	11
+12	Александра	Никитина	Алексеевна	12
+13	Владимир	Андреев	Владимирович	13
+14	Татьяна	Степанова	Владимировна	14
+15	Игорь	Николаев	Игоревич	15
+\.
+
+
+--
+-- Data for Name: manufacturers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.manufacturers (manufacturer_id, manufacturer_name) FROM stdin;
+0	PepsiCo 🥤
+1	Samsung 📱
+2	Toyota 🚗
+3	Nike 👟
+4	Coca-Cola 🥤
+5	Microsoft 💻
+6	Adidas 👟
+7	Ford 🚗
+8	Google  🌐
+9	Amazon 📦
+10	BMW 🚗
+11	Intel 💻
+12	McDonald's 🍔
+13	Honda 🚗
+14	Sony 📺
+\.
+
+
+--
+-- Data for Name: newprices; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.newprices (new_prices_id, date_price_change, new_price, product_id) FROM stdin;
+0	1958-03-12	13081683.00	0
+1	1946-12-09	3980520.00	1
+2	1966-04-25	15093785.00	2
+3	1974-08-04	5201011.00	3
+4	1988-09-15	22840363.00	4
+5	2018-08-09	20184913.00	5
+6	2021-11-25	5278664.00	6
+7	1957-03-23	20364102.00	7
+8	1906-06-17	1633059.00	8
+9	1960-08-13	5683180.00	9
+10	1944-12-19	920912.00	10
+11	1949-08-04	24048355.00	11
+12	1902-06-28	22171439.00	12
+13	1932-07-16	12289410.00	13
+14	1933-11-20	1949129.00	14
+\.
+
+
+--
+-- Data for Name: product; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.product (product_id, product_size, product_price, product_name, product_color_id, category_id, manufacturer_id) FROM stdin;
+0	260	23516056.00	iPhone 11	1	1	0
+1	26310941	23548055.00	Samsung Galaxy S21	2	2	1
+2	8138219	10238878.00	Google Pixel 6	3	3	2
+3	1810539	17747038.00	OnePlus 9 Pro	4	4	3
+4	17661105	16056419.00	Xiaomi Mi 11	5	5	4
+5	9746023	16763225.00	Huawei P40 Pro	6	6	5
+6	19050337	16468144.00	Sony Xperia 1 III	7	7	6
+7	24524581	22698171.00	LG Velvet 5G	8	8	7
+8	12906775	26908440.00	Oppo Find X3 Pro	9	9	8
+9	19350875	4389888.00	Motorola Edge Plus	10	10	9
+10	11535243	22850018.00	BlackBerry Key2	11	11	10
+11	21864414	5020056.00	Nokia 8.3 5G	12	12	11
+12	7266060	2266530.00	ASUS ROG Phone 5	13	13	12
+13	21406568	15083468.00	HTC U20 5G	14	14	13
+14	17234399	6757697.00	Lenovo Legion Phone Duel 2	15	15	14
+\.
+
+
+--
+-- Data for Name: productpurchase; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.productpurchase (product_purchase_id, product_id, purchase_id) FROM stdin;
+0	14	0
+1	14	1
+2	10	2
+3	13	3
+4	2	4
+5	4	5
+6	0	6
+7	4	7
+8	4	8
+9	1	9
+10	10	10
+11	4	11
+12	11	12
+13	13	13
+14	0	14
+15	9	15
+\.
+
+
+--
+-- Data for Name: purchase; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.purchase (purchase_id, discount, purchase_date, store_id, customer_id) FROM stdin;
+0	0.58	1909-07-16	9	0
+1	0.93	1998-11-26	4	1
+2	0.10	1908-08-05	14	2
+3	0.60	1999-08-31	0	3
+4	0.32	1943-11-21	10	4
+5	0.41	1955-05-23	2	5
+6	0.12	1975-08-16	13	6
+7	0.79	1960-05-01	13	7
+8	0.31	1967-07-10	0	8
+9	0.17	1968-01-11	0	9
+10	0.32	2010-10-29	11	10
+11	0.51	1905-10-07	13	11
+12	0.78	1921-02-16	5	12
+13	0.77	2006-03-30	13	13
+14	0.48	2005-12-03	1	14
+15	0.48	1925-06-28	2	15
+\.
+
+
+--
+-- Data for Name: purchasedelivery; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.purchasedelivery (purchase_delivery_id, delivery_date, purchase_id) FROM stdin;
+0	2025-10-12	0
+1	2018-01-20	1
+2	2015-03-13	2
+3	2019-06-17	3
+4	2017-09-15	4
+5	2013-12-23	5
+6	2017-03-18	6
+7	2021-04-12	7
+8	2023-08-31	8
+9	2020-07-19	9
+10	2024-02-03	10
+11	2025-11-28	11
+12	2012-01-30	12
+13	2016-04-11	13
+14	2015-07-06	14
+15	2024-04-08	15
+\.
+
+
+--
+-- Data for Name: store; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.store (store_id, store_name, store_addr_id) FROM stdin;
+0	Store	1
+1	Store	2
+2	Store	3
+3	Store	4
+4	Store	5
+5	Store	6
+6	Store	7
+7	Store	8
+8	Store	9
+9	Store	10
+10	Store	11
+11	Store	12
+12	Store	13
+13	Store	14
+14	Store	15
+\.
+
+
+--
+-- Data for Name: storeproduct; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.storeproduct (store_product_id, product_id, store_id, product_count) FROM stdin;
+0	0	0	5
+1	1	0	0
+2	2	0	2
+3	3	0	0
+4	4	0	5
+5	5	0	0
+6	6	0	1
+7	7	0	5
+8	8	0	2
+9	9	0	2
+10	10	0	4
+11	11	0	5
+12	12	0	3
+13	13	0	4
+14	14	0	1
+15	0	1	0
+16	1	1	4
+17	2	1	5
+18	3	1	3
+19	4	1	1
+20	5	1	5
+21	6	1	0
+22	7	1	5
+23	8	1	4
+24	9	1	5
+25	10	1	4
+26	11	1	2
+27	12	1	5
+28	13	1	3
+29	14	1	4
+30	0	2	4
+31	1	2	3
+32	2	2	1
+33	3	2	1
+34	4	2	2
+35	5	2	2
+36	6	2	0
+37	7	2	0
+38	8	2	4
+39	9	2	5
+40	10	2	1
+41	11	2	3
+42	12	2	0
+43	13	2	1
+44	14	2	0
+45	0	3	4
+46	1	3	5
+47	2	3	1
+48	3	3	2
+49	4	3	5
+50	5	3	1
+51	6	3	0
+52	7	3	1
+53	8	3	1
+54	9	3	5
+55	10	3	1
+56	11	3	0
+57	12	3	1
+58	13	3	3
+59	14	3	1
+60	0	4	2
+61	1	4	1
+62	2	4	3
+63	3	4	3
+64	4	4	0
+65	5	4	1
+66	6	4	2
+67	7	4	4
+68	8	4	2
+69	9	4	3
+70	10	4	0
+71	11	4	0
+72	12	4	1
+73	13	4	4
+74	14	4	1
+75	0	5	2
+76	1	5	2
+77	2	5	1
+78	3	5	1
+79	4	5	4
+80	5	5	3
+81	6	5	3
+82	7	5	2
+83	8	5	2
+84	9	5	3
+85	10	5	0
+86	11	5	0
+87	12	5	1
+88	13	5	2
+89	14	5	3
+90	0	6	3
+91	1	6	4
+92	2	6	1
+93	3	6	5
+94	4	6	2
+95	5	6	1
+96	6	6	3
+97	7	6	0
+98	8	6	4
+99	9	6	3
+100	10	6	5
+101	11	6	3
+102	12	6	3
+103	13	6	0
+104	14	6	1
+105	0	7	0
+106	1	7	5
+107	2	7	3
+108	3	7	5
+109	4	7	4
+110	5	7	4
+111	6	7	1
+112	7	7	5
+113	8	7	1
+114	9	7	2
+115	10	7	0
+116	11	7	4
+117	12	7	4
+118	13	7	2
+119	14	7	5
+120	0	8	0
+121	1	8	0
+122	2	8	0
+123	3	8	1
+124	4	8	1
+125	5	8	5
+126	6	8	2
+127	7	8	1
+128	8	8	1
+129	9	8	3
+130	10	8	4
+131	11	8	5
+132	12	8	2
+133	13	8	2
+134	14	8	0
+135	0	9	2
+136	1	9	2
+137	2	9	3
+138	3	9	4
+139	4	9	1
+140	5	9	2
+141	6	9	1
+142	7	9	2
+143	8	9	1
+144	9	9	1
+145	10	9	1
+146	11	9	4
+147	12	9	1
+148	13	9	1
+149	14	9	2
+150	0	10	2
+151	1	10	4
+152	2	10	1
+153	3	10	5
+154	4	10	3
+155	5	10	5
+156	6	10	4
+157	7	10	5
+158	8	10	5
+159	9	10	1
+160	10	10	3
+161	11	10	1
+162	12	10	5
+163	13	10	2
+164	14	10	5
+165	0	11	1
+166	1	11	0
+167	2	11	5
+168	3	11	4
+169	4	11	2
+170	5	11	5
+171	6	11	5
+172	7	11	1
+173	8	11	4
+174	9	11	3
+175	10	11	4
+176	11	11	4
+177	12	11	5
+178	13	11	1
+179	14	11	0
+180	0	12	2
+181	1	12	4
+182	2	12	3
+183	3	12	5
+184	4	12	1
+185	5	12	4
+186	6	12	5
+187	7	12	0
+188	8	12	4
+189	9	12	5
+190	10	12	0
+191	11	12	2
+192	12	12	5
+193	13	12	4
+194	14	12	2
+195	0	13	3
+196	1	13	0
+197	2	13	3
+198	3	13	1
+199	4	13	2
+200	5	13	0
+201	6	13	0
+202	7	13	3
+203	8	13	3
+204	9	13	3
+205	10	13	3
+206	11	13	0
+207	12	13	5
+208	13	13	0
+209	14	13	3
+210	0	14	0
+211	1	14	5
+212	2	14	1
+213	3	14	3
+214	4	14	2
+215	5	14	0
+216	6	14	2
+217	7	14	5
+218	8	14	1
+219	9	14	0
+220	10	14	3
+221	11	14	0
+222	12	14	3
+223	13	14	5
+224	14	14	5
+\.
+
+
+--
+-- Name: addreses_adress_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.addreses_adress_id_seq', 1, false);
+
+
+--
+-- Name: category_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.category_category_id_seq', 1, false);
+
+
+--
+-- Name: colors_color_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.colors_color_id_seq', 1, false);
+
+
+--
+-- Name: customers_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.customers_customer_id_seq', 1, false);
+
+
+--
+-- Name: manufacturers_manufacturer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.manufacturers_manufacturer_id_seq', 1, false);
+
+
+--
+-- Name: newprices_new_prices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.newprices_new_prices_id_seq', 1, false);
+
+
+--
+-- Name: product_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.product_product_id_seq', 1, false);
+
+
+--
+-- Name: productpurchase_product_purchase_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.productpurchase_product_purchase_id_seq', 1, false);
+
+
+--
+-- Name: purchase_purchase_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.purchase_purchase_id_seq', 1, false);
+
+
+--
+-- Name: purchasedelivery_purchase_delivery_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.purchasedelivery_purchase_delivery_id_seq', 1, false);
+
+
+--
+-- Name: store_store_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.store_store_id_seq', 1, false);
+
+
+--
+-- Name: storeproduct_store_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.storeproduct_store_product_id_seq', 1, false);
+
+
+--
+-- Name: addreses addreses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addreses
+    ADD CONSTRAINT addreses_pkey PRIMARY KEY (adress_id);
+
+
+--
+-- Name: category category_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.category
+    ADD CONSTRAINT category_pkey PRIMARY KEY (category_id);
+
+
+--
+-- Name: colors colors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.colors
+    ADD CONSTRAINT colors_pkey PRIMARY KEY (color_id);
+
+
+--
+-- Name: customers customers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.customers
+    ADD CONSTRAINT customers_pkey PRIMARY KEY (customer_id);
+
+
+--
+-- Name: manufacturers manufacturers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.manufacturers
+    ADD CONSTRAINT manufacturers_pkey PRIMARY KEY (manufacturer_id);
+
+
+--
+-- Name: newprices newprices_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.newprices
+    ADD CONSTRAINT newprices_pkey PRIMARY KEY (new_prices_id);
+
+
+--
+-- Name: product product_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT product_pkey PRIMARY KEY (product_id);
+
+
+--
+-- Name: productpurchase productpurchase_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.productpurchase
+    ADD CONSTRAINT productpurchase_pkey PRIMARY KEY (product_purchase_id);
+
+
+--
+-- Name: purchase purchase_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.purchase
+    ADD CONSTRAINT purchase_pkey PRIMARY KEY (purchase_id);
+
+
+--
+-- Name: purchasedelivery purchasedelivery_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.purchasedelivery
+    ADD CONSTRAINT purchasedelivery_pkey PRIMARY KEY (purchase_delivery_id);
+
+
+--
+-- Name: store store_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.store
+    ADD CONSTRAINT store_pkey PRIMARY KEY (store_id);
+
+
+--
+-- Name: storeproduct storeproduct_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.storeproduct
+    ADD CONSTRAINT storeproduct_pkey PRIMARY KEY (store_product_id);
+
+
+--
+-- Name: product fk_category_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES public.category(category_id);
+
+
+--
+-- Name: customers fk_customer_addr_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.customers
+    ADD CONSTRAINT fk_customer_addr_id FOREIGN KEY (customer_addr_id) REFERENCES public.addreses(adress_id);
+
+
+--
+-- Name: purchase fk_customer_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.purchase
+    ADD CONSTRAINT fk_customer_id FOREIGN KEY (customer_id) REFERENCES public.customers(customer_id);
+
+
+--
+-- Name: product fk_manufacturer_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT fk_manufacturer_id FOREIGN KEY (manufacturer_id) REFERENCES public.manufacturers(manufacturer_id);
+
+
+--
+-- Name: product fk_product_color_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT fk_product_color_id FOREIGN KEY (product_color_id) REFERENCES public.colors(color_id);
+
+
+--
+-- Name: newprices fk_product_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.newprices
+    ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES public.product(product_id);
+
+
+--
+-- Name: storeproduct fk_product_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.storeproduct
+    ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES public.product(product_id);
+
+
+--
+-- Name: productpurchase fk_product_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.productpurchase
+    ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES public.product(product_id);
+
+
+--
+-- Name: purchasedelivery fk_purchase_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.purchasedelivery
+    ADD CONSTRAINT fk_purchase_id FOREIGN KEY (purchase_id) REFERENCES public.purchase(purchase_id);
+
+
+--
+-- Name: productpurchase fk_purchase_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.productpurchase
+    ADD CONSTRAINT fk_purchase_id FOREIGN KEY (purchase_id) REFERENCES public.purchase(purchase_id);
+
+
+--
+-- Name: store fk_store_addr_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.store
+    ADD CONSTRAINT fk_store_addr_id FOREIGN KEY (store_addr_id) REFERENCES public.addreses(adress_id);
+
+
+--
+-- Name: storeproduct fk_store_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.storeproduct
+    ADD CONSTRAINT fk_store_id FOREIGN KEY (store_id) REFERENCES public.store(store_id);
+
+
+--
+-- Name: purchase fk_store_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.purchase
+    ADD CONSTRAINT fk_store_id FOREIGN KEY (store_id) REFERENCES public.store(store_id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

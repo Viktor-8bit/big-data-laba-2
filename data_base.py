@@ -36,21 +36,21 @@ addresses = [
 
 # Производители id [0 - 15]
 manufacturers = [ 
-    Manufacturers(0, "PepsiCo 🥤"),
-    Manufacturers(1, "Samsung 📱"), 
-    Manufacturers(2, "Toyota 🚗"), 
-    Manufacturers(3, "Nike 👟"), 
-    Manufacturers(4, "Coca-Cola 🥤"), 
-    Manufacturers(5, "Microsoft 💻"), 
-    Manufacturers(6, "Adidas 👟"), 
-    Manufacturers(7, "Ford 🚗"), 
-    Manufacturers(8, "Google  🌐"),
-    Manufacturers(9, "Amazon 📦"), 
-    Manufacturers(10, "BMW 🚗"), 
-    Manufacturers(11, "Intel 💻"), 
-    Manufacturers(12, "McDonald's 🍔"),
-    Manufacturers(13, "Honda 🚗"), 
-    Manufacturers(14, "Sony 📺"), 
+    Manufacturers(0, "Enchanted Elixirs"),
+    Manufacturers(1, "Samsung"), 
+    Manufacturers(2, "Bosh"), 
+    Manufacturers(3, "Nike"), 
+    Manufacturers(4, "Coca-Cola"), 
+    Manufacturers(5, "Microsoft"), 
+    Manufacturers(6, "Adidas"), 
+    Manufacturers(7, "Ford"), 
+    Manufacturers(8, "Google"),
+    Manufacturers(9, "Amazon"), 
+    Manufacturers(10, "Galactic Gemstones"), 
+    Manufacturers(11, "Celestial Confections"), 
+    Manufacturers(12, "McDonald's"),
+    Manufacturers(13, "Whimsical Wizardry"), 
+    Manufacturers(14, "Sony"), 
 ]
 
 # Цвета id [0 - 15]
@@ -94,7 +94,7 @@ customers = [
 
 # Категории id [0 - 15]
 categories = [
-    Category(1, "Smartphone"),
+    Category(1, "ArOaM"),
     Category(2, "Tablet"),
     Category(3, "Headphones"),
     Category(4, "Smartwatch"),
@@ -103,10 +103,10 @@ categories = [
     Category(7, "Gaming Console"),
     Category(8, "Printer"),
     Category(9, "Monitor"),
-    Category(10, "Router"),
-    Category(11, "Keyboard"),
+    Category(10, "AtOosfsfsM"),
+    Category(11, "AyOosdfsdfM"),
     Category(12, "Mouse"),
-    Category(13, "Smart Home Device"),
+    Category(13, "ArOaMp"),
     Category(14, "Fitness Tracker"),
     Category(15, "External Hard Drive"),
     Category(16, "Software")
@@ -125,9 +125,9 @@ products = [
     Product(2, random.randint(1, 27000000), random.randint(1, 27000000), "Google Pixel 6", categories[2], colors[2], manufacturers[2]),
     Product(3, random.randint(1, 27000000), random.randint(1, 27000000), "OnePlus 9 Pro", categories[3], colors[3], manufacturers[3]),
     Product(4, random.randint(1, 27000000), random.randint(1, 27000000), "Xiaomi Mi 11", categories[4], colors[4], manufacturers[4]),
-    Product(5, random.randint(1, 27000000), random.randint(1, 27000000), "Huawei P40 Pro", categories[5], colors[5], manufacturers[5]),
+    Product(5, random.randint(1, 27000000), random.randint(1, 27000000), "Huawei P40 Pro", categories[5], colors[5], manufacturers[2]),
     Product(6, random.randint(1, 27000000), random.randint(1, 27000000), "Sony Xperia 1 III", categories[6], colors[6], manufacturers[6]),
-    Product(7, random.randint(1, 27000000), random.randint(1, 27000000), "LG Velvet 5G", categories[7], colors[7], manufacturers[7]),
+    Product(7, random.randint(1, 27000000), random.randint(1, 27000000), "LG Velvet 5G", categories[7], colors[7], manufacturers[2]),
     Product(8, random.randint(1, 27000000), random.randint(1, 27000000), "Oppo Find X3 Pro", categories[8], colors[8], manufacturers[8]),
     Product(9, random.randint(1, 27000000), random.randint(1, 27000000), "Motorola Edge Plus", categories[9], colors[9], manufacturers[9]),
     Product(10, random.randint(1, 27000000), random.randint(1, 27000000), "BlackBerry Key2", categories[10], colors[10], manufacturers[10]),
@@ -147,6 +147,18 @@ for p in products:
     random_date = start_date + timedelta(days=random_days)
     newprices.append(NewPrices(id, f"{random_date.year}-{random_date.month}-{random_date.day}", random.randint(1, 27000000), products[id]))
     id += 1
+    # для ноября текущего года
+start_date = datetime(2024, 11, 1)
+end_date = datetime(2025, 12, 1)
+p_id = 7
+for p in products:
+    random_days = random.randint(0, (end_date - start_date).days)
+    random_date = start_date + timedelta(days=random_days)
+    newprices.append(NewPrices(id, f"{random_date.year}-{random_date.month}-{random_date.day}", random.randint(1, 27000000), products[p_id]))
+    p_id += 1
+    id += 1
+    if (p_id == 14):
+        break
 
 # Склады id [0 - 15]
 id = 0
